@@ -1,6 +1,11 @@
 import Head from 'next/head';
 
-const Header = ({ title, icon }) => {
+interface Props {
+  icon: string;
+  title: string;
+}
+
+const Header = ({ title, icon }: Props) => {
   return (
     <Head>
       <title>{title}</title>
