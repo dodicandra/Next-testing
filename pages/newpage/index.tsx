@@ -26,12 +26,11 @@ const getProduk = async () => {
 };
 
 const NewPages: NextPage<Props> = ({ produk }) => {
-  const { data, isLoading } = useQuery(['getProduk'], getProduk, { initialData: produk });
+  const { data, isLoading } = useQuery(['getProduk'], getProduk);
   if (isLoading) return <p>loading...</p>;
   return (
     <>
-      <Header title={produk[0].title} />
-      {data.map((val) => (
+      {data?.map((val) => (
         <div key={val.id}>
           <h1>{val.title}</h1>
           <img src={val.imageUrl} alt={val.title} />
@@ -39,11 +38,6 @@ const NewPages: NextPage<Props> = ({ produk }) => {
       ))}
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  const data = await getProduk();
-  return { props: { produk: data } };
 };
 
 export default NewPages;
