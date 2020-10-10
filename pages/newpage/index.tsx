@@ -2,6 +2,7 @@ import Header from '@component/Head';
 import { GetStaticProps, NextPage } from 'next';
 import { fethApi } from 'api/hello';
 import { useQuery } from 'react-query';
+import { data } from '@dummy/produk';
 
 interface ProductsData {
   id: string;
@@ -42,7 +43,6 @@ const NewPages: NextPage<Props> = ({ produk }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const data = await getProduk();
   return { props: { produk: data } };
 };
 

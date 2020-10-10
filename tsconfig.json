@@ -21,6 +21,9 @@
     "paths": {
       "@component/*": [
         "components/*"
+      ],
+      "@dummy/*": [
+        "dummy/*"
       ]
     }
   },
