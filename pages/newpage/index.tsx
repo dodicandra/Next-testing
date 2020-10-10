@@ -41,4 +41,9 @@ const NewPages: NextPage<Props> = ({ produk }) => {
   );
 };
 
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const data = await getProduk();
+  return { props: { produk: data } };
+};
+
 export default NewPages;
