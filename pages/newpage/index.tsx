@@ -1,7 +1,7 @@
 import Header from '@component/Head';
 import { GetStaticProps, NextPage } from 'next';
 import { fethApi } from 'api/hello';
-import { useQuery } from 'react-query';
+import useSwr from 'swr';
 import { data } from '@dummy/produk';
 
 interface ProductsData {
@@ -17,18 +17,18 @@ interface Props {
   loading: boolean;
 }
 
-const getProduk = async () => {
+const getProduk = async (key = {}, path) => {
   try {
-    const { data } = await fethApi<{ data: ProductsData[] }>('product');
+    const { data } = await fethApi<{ data: ProductsData[] }>(path);
     return data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
 const NewPages: NextPage<Props> = ({ produk }) => {
-  const { data, isLoading } = useQuery(['getProduk'], getProduk, { initialData: produk });
-  if (isLoading) return <p>loading...</p>;
+  const { data, error } = useSwr(['getProduk', 'product'], getProduk);
+  if (error) return <p>loading...</p>;
   return (
     <>
       <Header title="my new pages" />
@@ -40,10 +40,6 @@ const NewPages: NextPage<Props> = ({ produk }) => {
       ))}
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  return { props: { produk: data } };
 };
 
 export default NewPages;
