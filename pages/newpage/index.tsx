@@ -2,7 +2,6 @@ import Header from '@component/Head';
 import { GetStaticProps, NextPage } from 'next';
 import { fethApi } from 'api/hello';
 import useSwr from 'swr';
-import { data } from '@dummy/produk';
 
 interface ProductsData {
   id: string;
@@ -40,6 +39,15 @@ const NewPages: NextPage<Props> = ({ produk }) => {
       ))}
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps<{ produk: ProductsData[] }> = async ({ params }) => {
+  const data = await getProduk({}, 'product');
+  return {
+    props: {
+      produk: data,
+    },
+  };
 };
 
 export default NewPages;
