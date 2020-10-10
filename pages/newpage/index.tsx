@@ -30,6 +30,7 @@ const NewPages: NextPage<Props> = ({ produk }) => {
   if (isLoading) return <p>loading...</p>;
   return (
     <>
+      <Header title="my new pages" />
       {data?.map((val) => (
         <div key={val.id}>
           <h1>{val.title}</h1>
