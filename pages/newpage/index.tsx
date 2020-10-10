@@ -1,6 +1,6 @@
 import Header from '@component/Head';
 import { GetStaticProps, NextPage } from 'next';
-import { fethApi } from 'pages/api/hello';
+import { fethApi } from 'api/hello';
 import { useQuery } from 'react-query';
 
 interface ProductsData {

@@ -1,10 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-export default (req: any, res: any) => {
-  res.statusCode = 200;
-  res.json({ name: 'John Doe' });
-};
-
 type Method = 'GET' | 'POST';
 
 type Body =
@@ -22,7 +16,12 @@ export async function fethApi<T = any>(
   method: Method = 'GET',
   body?: Body
 ): Promise<T> {
-  const result = await fetch(baseUrl, {
+  const url =
+    process.env.NODE_ENV === 'development'
+      ? 'https://api.admin-server-bons.com/api/v1/'
+      : process.env.NEXT_PUBLIC_API;
+
+  const result = await fetch(url + baseUrl, {
     method: method,
     body,
     headers: {

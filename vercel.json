@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/v1/(.*)",
-      "destination": "https://api.admin-server-bons.com/api/v1/$1"
-    }
-  ]
-}
