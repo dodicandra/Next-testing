@@ -22,7 +22,7 @@ export async function fethApi<T = any>(
   method: Method = 'GET',
   body?: Body
 ): Promise<T> {
-  const result = await fetch('https://api.admin-server-bons.com/api/v1/' + baseUrl, {
+  const result = await fetch(baseUrl, {
     method: method,
     body,
     headers: {
