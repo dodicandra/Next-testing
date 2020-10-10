@@ -1,6 +1,6 @@
 import Header from '@component/Head';
 import { fethApi } from 'api/hello';
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 
 interface ProductsData {
   id: string;
@@ -29,7 +29,7 @@ const NewPages: NextPage<Props> = ({ produk }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<{ produk: ProductsData[] }> = async () => {
+export const getServerSideProps: GetServerSideProps<{ produk: ProductsData[] }> = async () => {
   const { data } = await fethApi<{ data: ProductsData[] }>('product');
   return {
     props: {
