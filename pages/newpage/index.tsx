@@ -31,7 +31,7 @@ const NewPages: NextPage<Props> = ({ produk }) => {
   if (error) return <p>loading...</p>;
   return (
     <>
-      <Header title={data[0].title ?? ''} icon={data[0].imageUrl ?? ''} />
+      <Header title={data && data[0].title} icon={data && data[0].imageUrl} />
       {data?.map((val) => (
         <div key={val.id}>
           <h1>{val.title}</h1>
