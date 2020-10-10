@@ -29,14 +29,8 @@ const NewPages: NextPage<Props> = ({ produk }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<{ produk: ProductsData[] }> = async ({ params }) => {
-  const { data } = await fethApi<{ data: ProductsData[] }>(
-    'http://localhost:3000/api/newpage',
-    'GET',
-    {
-      urlBase: true,
-    }
-  );
+export const getStaticProps: GetStaticProps<{ produk: ProductsData[] }> = async () => {
+  const { data } = await fethApi<{ data: ProductsData[] }>('product');
   return {
     props: {
       produk: data,
