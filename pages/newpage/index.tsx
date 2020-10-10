@@ -27,7 +27,7 @@ const getProduk = async () => {
 };
 
 const NewPages: NextPage<Props> = ({ produk }) => {
-  const { data, isLoading } = useQuery(['getProduk'], getProduk);
+  const { data, isLoading } = useQuery(['getProduk'], getProduk, { initialData: produk });
   if (isLoading) return <p>loading...</p>;
   return (
     <>
