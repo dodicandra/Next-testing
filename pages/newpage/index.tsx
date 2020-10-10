@@ -1,7 +1,6 @@
 import Header from '@component/Head';
-import { GetStaticProps, NextPage } from 'next';
 import { fethApi } from 'api/hello';
-import useSwr from 'swr';
+import { GetStaticProps, NextPage } from 'next';
 
 interface ProductsData {
   id: string;
@@ -16,22 +15,11 @@ interface Props {
   loading: boolean;
 }
 
-const getProduk = async (key = {}, path) => {
-  try {
-    const { data } = await fethApi<{ data: ProductsData[] }>(path);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-
 const NewPages: NextPage<Props> = ({ produk }) => {
-  const { data, error } = useSwr(['getProduk', 'product'], getProduk);
-  if (error) return <p>loading...</p>;
   return (
     <>
-      <Header title={data && data[0].title} icon={data && data[0].imageUrl} />
-      {data?.map((val) => (
+      <Header title={produk[0].title} icon={produk[0].imageUrl} />
+      {produk?.map((val) => (
         <div key={val.id}>
           <h1>{val.title}</h1>
           <img src={val.imageUrl} alt={val.title} />
@@ -42,7 +30,13 @@ const NewPages: NextPage<Props> = ({ produk }) => {
 };
 
 export const getStaticProps: GetStaticProps<{ produk: ProductsData[] }> = async ({ params }) => {
-  const data = await getProduk({}, 'product');
+  const { data } = await fethApi<{ data: ProductsData[] }>(
+    'http://localhost:3000/api/newpage',
+    'GET',
+    {
+      urlBase: true,
+    }
+  );
   return {
     props: {
       produk: data,

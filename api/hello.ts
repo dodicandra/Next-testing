@@ -11,9 +11,14 @@ type Body =
   | ReadableStream<Uint8Array>
   | null;
 
+type Option = {
+  urlBase: boolean;
+};
+
 export async function fethApi<T = any>(
   baseUrl: string,
   method: Method = 'GET',
+  option?: Option,
   body?: Body
 ): Promise<T> {
   const url =
@@ -21,7 +26,9 @@ export async function fethApi<T = any>(
       ? 'https://api.admin-server-bons.com/api/v1/'
       : process.env.NEXT_PUBLIC_API;
 
-  const result = await fetch(url + baseUrl, {
+  const base = url + baseUrl;
+
+  const result = await fetch(option ? baseUrl : base, {
     method: method,
     body,
     headers: {
