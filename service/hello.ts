@@ -22,14 +22,11 @@ export async function fethApi<T = any>(
   option: Option,
   body?: Body
 ): Promise<T> {
-  const url =
-    process.env.NODE_ENV === 'development'
-      ? 'https://api.admin-server-bons.com/api/v1/'
-      : process.env.NEXT_PUBLIC_API;
+  const url = process.env.NEXT_PUBLIC_API;
 
   const base = url + baseUrl;
 
-  const deep = 'https://api-zob-bons.xyz/api_deeplink/' + baseUrl;
+  const deep = process.env.NEXT_PUBLIC_API_DEEP + baseUrl;
 
   const result = await fetch(option.urlBase ? base : deep, {
     method: method,
