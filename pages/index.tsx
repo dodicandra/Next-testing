@@ -22,7 +22,7 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <Link href="/produk/lotek-amay">
+          <Link href={`/produk/${id}`}>
             <div className={styles.card}>
               <h3>Documentation Lotek amay</h3>
               <p>Find in-depth information about Next.js features and API.</p>
