@@ -18,7 +18,12 @@ interface Props {
 const NewPages: NextPage<Props> = ({ produk }) => {
   return (
     <>
-      <Header title={produk[0].title} icon={produk[0].imageUrl} />
+      <Header
+        title={produk[0].title}
+        icon={produk[0].imageUrl}
+        content={produk[0].description}
+        titleContent={produk[0].title}
+      />
       {produk?.map((val) => (
         <div key={val.id}>
           <h1>{val.title}</h1>

@@ -20,7 +20,12 @@ const Produk: NextPage<Props> = ({ produk }) => {
   if (!produk) return <p>error</p>;
   return (
     <>
-      <Header title={produk.bisnisproduknama} icon={produk.bisnisprodukfoto} />
+      <Header
+        title={produk.bisnisproduknama}
+        icon={produk.bisnisprodukfoto}
+        titleContent={produk.bisnisproduknama}
+        content={produk.bisnisuserajakan}
+      />
       <div>
         <h1>{produk.bisnisproduknama}</h1>
         <img src={produk.bisnisprodukfoto} alt={produk.bisnisproduknama} />
