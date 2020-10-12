@@ -12,13 +12,14 @@ type Body =
   | null;
 
 type Option = {
-  urlBase: boolean;
+  urlBase?: boolean;
+  deplink?: boolean;
 };
 
 export async function fethApi<T = any>(
   baseUrl: string,
   method: Method = 'GET',
-  option?: Option,
+  option: Option,
   body?: Body
 ): Promise<T> {
   const url =
@@ -28,7 +29,9 @@ export async function fethApi<T = any>(
 
   const base = url + baseUrl;
 
-  const result = await fetch(option ? baseUrl : base, {
+  const deep = 'https://api-zob-bons.xyz/api_deeplink/' + baseUrl;
+
+  const result = await fetch(option.urlBase ? base : deep, {
     method: method,
     body,
     headers: {

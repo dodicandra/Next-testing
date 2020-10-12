@@ -24,6 +24,9 @@
       ],
       "@dummy/*": [
         "dummy/*"
+      ],
+      "@service/*": [
+        "service/*"
       ]
     }
   },

@@ -1,5 +1,5 @@
 import Header from '@component/Head';
-import { fethApi } from 'api/hello';
+import { fethApi } from '@service/hello';
 import { GetServerSideProps, NextPage } from 'next';
 
 interface ProductsData {
@@ -30,7 +30,7 @@ const NewPages: NextPage<Props> = ({ produk }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<{ produk: ProductsData[] }> = async () => {
-  const { data } = await fethApi<{ data: ProductsData[] }>('product');
+  const { data } = await fethApi<{ data: ProductsData[] }>('product', 'GET', { urlBase: true });
   return {
     props: {
       produk: data,

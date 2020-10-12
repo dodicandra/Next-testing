@@ -2,9 +2,12 @@ import Header from '@component/Head';
 import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const names = 'dodi';
+  const { query } = useRouter();
+  const id = query.id;
   return (
     <div className={styles.container}>
       <Header title="first next app" />
@@ -19,10 +22,12 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <Link href="/produk/lotek-amay">
+            <div className={styles.card}>
+              <h3>Documentation Lotek amay</h3>
+              <p>Find in-depth information about Next.js features and API.</p>
+            </div>
+          </Link>
 
           <Link href={`/newpage`}>
             <div className={styles.card}>
