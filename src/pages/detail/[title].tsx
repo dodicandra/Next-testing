@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { GetServerSideProps, NextPage } from 'next';
 import { fethApi } from 'src/service/hello';
 
@@ -17,6 +19,11 @@ interface Props {
 }
 
 const NewPages: NextPage<Props> = ({ produk }) => {
+  useEffect(() => {
+    const userAgent = window.navigator.userAgent;
+    console.log(userAgent);
+  }, []);
+
   return (
     <>
       <Header title={produk.title} icon={produk.imageUrl} content={produk.description} titleContent={produk.title} />
