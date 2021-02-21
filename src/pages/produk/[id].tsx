@@ -1,6 +1,7 @@
+import { GetServerSideProps, NextPage } from 'next';
+
 import Header from '@component/Head';
 import { fethApi } from '@service/hello';
-import { GetServerSideProps, NextPage } from 'next';
 
 interface Shared {
   bisnisprodukfoto: string;

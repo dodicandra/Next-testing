@@ -1,14 +1,26 @@
 import React from 'react';
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 
-export default function Home() {
+import { GetServerSideProps, NextPage } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import Header from '@component/Head';
+import ProdukContainer, { ProductsData } from '@component/Produk';
+import { fethApi } from '@service/hello';
+
+import styles from '../../styles/Home.module.scss';
+
+type Props = {
+  produk: ProductsData[];
+};
+
+const Home: NextPage<Props> = ({ produk }) => {
+  const { query } = useRouter();
+  const id = query.id;
+
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Header title="first next app" />
 
       <main className={styles.main}>
         <h1 className={styles.title}>
@@ -20,15 +32,19 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <Link href={`/produk/${id}`}>
+            <div className={styles.card}>
+              <h3>Documentation Lotek amay</h3>
+              <p>Find in-depth information about Next.js features and API.</p>
+            </div>
+          </Link>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <Link href={`/newpage`}>
+            <div className={styles.card}>
+              <h3>Learn &rarr;</h3>
+              <p>Learn about Next.js in an interactive course with quizzes!</p>
+            </div>
+          </Link>
 
           <a href="https://github.com/vercel/next.js/tree/master/examples" className={styles.card}>
             <h3>Examples &rarr;</h3>
@@ -45,6 +61,10 @@ export default function Home() {
         </div>
       </main>
 
+      <div>
+        <ProdukContainer produk={produk} />
+      </div>
+
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -56,4 +76,15 @@ export default function Home() {
       </footer>
     </div>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps<{ produk: ProductsData[] }> = async () => {
+  const { data } = await fethApi<{ data: ProductsData[] }>('product', 'GET', { urlBase: true });
+  return {
+    props: {
+      produk: data,
+    },
+  };
+};
+
+export default Home;
