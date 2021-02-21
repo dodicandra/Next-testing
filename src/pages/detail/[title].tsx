@@ -37,8 +37,10 @@ const NewPages: NextPage<Props> = ({ produk }) => {
 
 export const getServerSideProps: GetServerSideProps<{ produk: ProductsData | object }, { title: string }> = async ({
   params,
+  ...ctx
 }) => {
   const { data } = await fethApi<{ data: ProductsData }>(`product/title/${params.title}`, 'GET', { urlBase: true });
+  console.log(ctx.req.headers['user-agent']);
   return {
     props: { produk: data ?? {} },
   };
