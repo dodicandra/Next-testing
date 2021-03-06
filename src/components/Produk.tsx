@@ -19,12 +19,14 @@ const ProdukContainer: React.FC<Props> = ({ produk }) => {
       {produk?.map((val) => {
         let links = val.title.split(' ').join('-');
         return (
-          <Link key={val.id} href={`detail/${links}`}>
-            <div>
-              <h1>{val.title}</h1>
-              <img style={{ height: 100, width: 100 }} src={val.imageUrl} alt={val.title} />
-            </div>
-          </Link>
+          <div key={val.id}>
+            <Link href={`detail/${links}`}>
+              <a>
+                <h1>{val.title}</h1>
+              </a>
+            </Link>
+            <img style={{ height: 100, width: 100 }} src={val.imageUrl} alt={val.title} />
+          </div>
         );
       })}
     </>

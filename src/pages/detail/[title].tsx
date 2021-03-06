@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { fethApi } from 'src/service/hello';
 
 import Header from '@component/Head';
@@ -19,10 +20,15 @@ interface Props {
 }
 
 const NewPages: NextPage<Props> = ({ produk }) => {
+  const router = useRouter();
   useEffect(() => {
     const userAgent = window.navigator.userAgent;
     console.log(userAgent);
   }, []);
+
+  if (router.isFallback) {
+    return <h2>loading...</h2>;
+  }
 
   return (
     <>
@@ -35,14 +41,24 @@ const NewPages: NextPage<Props> = ({ produk }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<{ produk: ProductsData | object }, { title: string }> = async ({
+export const getStaticPaths: GetStaticPaths<{ title: string }> = async () => {
+  const { data } = await fethApi<{ data: ProductsData[] }>('product', 'GET', { urlBase: true });
+  const paths = data.map((val) => ({ params: { title: val.title.split(' ').join('-') } }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps<{ produk: ProductsData | object }, { title: string }> = async ({
   params,
   ...ctx
 }) => {
   const { data } = await fethApi<{ data: ProductsData }>(`product/title/${params.title}`, 'GET', { urlBase: true });
-  console.log(ctx.req.headers['user-agent']);
   return {
     props: { produk: data ?? {} },
+    revalidate: 15,
   };
 };
 

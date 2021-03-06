@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -78,12 +78,13 @@ const Home: NextPage<Props> = ({ produk }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<{ produk: ProductsData[] }> = async () => {
+export const getStaticProps: GetStaticProps<{ produk: ProductsData[] }> = async () => {
   const { data } = await fethApi<{ data: ProductsData[] }>('product', 'GET', { urlBase: true });
   return {
     props: {
       produk: data,
     },
+    revalidate: 10,
   };
 };
 
